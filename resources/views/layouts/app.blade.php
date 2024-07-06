@@ -1,47 +1,64 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {{-- <link rel="stylesheet" href="{{ asset('css/app.css')}}" rel="stylesheet"> --}}
-        <title>DevStagram - @yield('title')</title>
-        @vite('resources/css/app.css')
-    </head>
-    <body class="bg-gray-100">
 
-        <header class="p-5 bg-white shadow border-b">
-            <div class="container mx-auto flex flex-col gap-5 md:flex-row justify-between items-center">
-                <h1> <a class="text-3xl font-black" href="/">DevStagram</a></h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <link rel="stylesheet" href="{{ asset('css/app.css')}}" rel="stylesheet"> --}}
+    <title>DevStagram - @yield('title')</title>
+    @vite('resources/css/app.css')
+</head>
 
-                @auth
+<body class="bg-gray-100">
+
+    <header class="p-5 bg-white shadow border-b">
+        <div class="container mx-auto flex flex-col gap-5 md:flex-row justify-between items-center">
+            <h1> <a class="text-3xl font-black" href="/">DevStagram</a></h1>
+
+            @auth
                 <nav class="flex gap-5 items-center">
-                    <a class="font-bold text-gray-600 text-sm" href="#">Hola: <span class="font-normal">{{ auth()->user()->username }}</span></a>
-                    <form action="{{ route('logout')}}" method="POST">
+                    <a href="{{ route('posts.create')}}" class="flex gap-2 items-center bg-white text-sm 
+                    uppercase cursor-pointer font-bold border text-gray-600 p-2 rounded hover:bg-gray-100 transition-all">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                    </svg>
+                        Crear
+
+                    </a>
+                    <a class="font-bold text-gray-600 text-sm" href="#">Hola: <span
+                            class="font-normal">{{ auth()->user()->username }}</span></a>
+                    <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="font-bold uppercase text-gray-600 text-sm" type="submit"">Cerrar Sesión</button>
                     </form>
                 </nav>
-                @endauth
+            @endauth
 
-                @guest
+            @guest
                 <nav class="flex gap-5 items-center">
-                    <a class="font-bold uppercase text-gray-600 text-sm" href="{{route('login')}}">Login</a>
-                    <a class="font-bold uppercase text-gray-600 text-sm" href="{{route('register')}}">Crear Cuenta</a>
+                    <a class="font-bold uppercase text-gray-600 text-sm" href="{{ route('login') }}">Login</a>
+                    <a class="font-bold uppercase text-gray-600 text-sm" href="{{ route('register') }}">Crear Cuenta</a>
                 </nav>
-                @endguest
-            </div>  
-        </header>
+            @endguest
+        </div>
+    </header>
 
-        <main class="container mx-auto mt-10">
-            <h2 class="font-black text-3xl text-center mb-10 mx-2 md:mx-0">@yield('title')</h2>
-            @yield('content')
-        </main>
+    <main class="container mx-auto mt-10">
+        <h2 class="font-black text-3xl text-center mb-10 mx-2 md:mx-0">@yield('title')</h2>
+        @yield('content')
+    </main>
 
-        <footer class="text-center text-gray-600 uppercase p-5 font-bold mt-10">
-            devstagram - todos los derechos reservados {{now()->year}} ©
-        </footer>
+    <footer class="text-center text-gray-600 uppercase p-5 font-bold mt-10">
+        devstagram - todos los derechos reservados {{ now()->year }} ©
+    </footer>
 
-        
-       
-    </body>
+
+
+</body>
+
 </html>

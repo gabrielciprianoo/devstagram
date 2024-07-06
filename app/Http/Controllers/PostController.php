@@ -16,4 +16,8 @@ class PostController extends Controller
             'user' => $user
         ]);
     }
+
+    public function create(){
+        dd('creando post');
+    }
 }
