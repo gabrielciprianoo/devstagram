@@ -7,6 +7,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css')}}" rel="stylesheet"> --}}
     <title>DevStagram - @yield('title')</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 
 <body class="bg-gray-100">
@@ -30,7 +31,7 @@
                         Crear
 
                     </a>
-                    <a class="font-bold text-gray-600 text-sm" href="#">Hola: <span
+                    <a class="font-bold text-gray-600 text-sm" href="{{ route('posts.index',auth()->user()->username)}}">Hola: <span
                             class="font-normal">{{ auth()->user()->username }}</span></a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
