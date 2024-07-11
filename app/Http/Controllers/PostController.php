@@ -13,9 +13,13 @@ class PostController extends Controller
         $this->middleware('auth');
     }
     public function index(User $user)
-    {
+    {   
+        //get user post to show
+        $posts = Post::where('user_id', $user->id)->paginate('3');
+
         return view('layouts.dashboard', [
-            'user' => $user
+            'user' => $user,
+            'posts' => $posts,
         ]);
     }
 
@@ -34,15 +38,21 @@ class PostController extends Controller
         ]);
 
         //insert record in database
-        $post = new Post();
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->image = $request->image;
-        $post->user_id = auth()->user()->id;
-        $post->save();
+        $request->user()->posts()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $request->image,
+        ]);
 
         return redirect()->route('posts.index', auth()->user()->username);
 
         
+    }
+
+    public function show(User $user, Post $post)
+    {
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 }
