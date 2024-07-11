@@ -19,7 +19,7 @@ class ImageController extends Controller
         //read and resize image with intervention image
         $manager = new ImageManager(new Driver());
         $serverImage = $manager->read($image);
-        $serverImage->resizeDown(1000,1000);
+        $serverImage->resize(1000,1000);
 
         //store image in uploads folder
 
