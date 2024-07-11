@@ -15,4 +15,9 @@ class Post extends Model
         'image',
         'user_id',
     ];
+
+    //define relationship with post owner user
+    public function user(){
+        return $this->belongsTo(User::class)->select(['name', 'username']);
+    }
 }
