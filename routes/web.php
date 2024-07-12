@@ -6,6 +6,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,16 +22,35 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', function () {
     return view('main');
 });
-Route::get('/create-account', [RegisterController::class, 'index'])->name('register');
-Route::post('/create-account', [RegisterController::class, 'store']);
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'store']);
+// Register Routes
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/create-account', 'index')->name('register');
+    Route::post('/create-account', 'store');
+});
+
+// Login Routes
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'index')->name('login');
+    Route::post('/login', 'store');
+});
+
+// Logout Route
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
-Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/{user:username}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+// Post Routes
+Route::controller(PostController::class)->group(function () {
+    Route::get('/{user:username}', 'index')->name('posts.index');
+    Route::get('/posts/create', 'create')->name('posts.create');
+    Route::post('/posts', 'store')->name('posts.store');
+    Route::delete('/posts/{post}', 'destroy')->name('posts.destroy');
+    Route::get('/{user:username}/posts/{post}', 'show')->name('posts.show');
+});
 
-Route::post('/images', [ImageController::class,'store'])->name('images.store');
+// Comments Routes
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/{user:username}/posts/{post}', 'store')->name('comments.store');
+});
+
+// Image Routes
+Route::post('/images', [ImageController::class, 'store'])->name('images.store');
