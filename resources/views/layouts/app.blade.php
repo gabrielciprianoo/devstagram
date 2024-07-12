@@ -51,7 +51,7 @@
     </header>
 
     <main class="container mx-auto mt-10">
-        <h2 class="font-black text-3xl text-center mb-10 mx-2 md:mx-0">@yield('title')</h2>
+        <h2 class="font-black text-xl mb-5 md:text-3xl text-center md:mb-10 mx-2 md:mx-0">@yield('title')</h2>
         @yield('content')
     </main>
 
