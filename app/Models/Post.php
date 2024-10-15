@@ -25,4 +25,15 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    //define reslationship with likes in the post
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+    //verify if a user likes to post
+    public function checkLike(User $user){
+        return $this->likes->contains('user_id',$user->id);
+    }
 }
